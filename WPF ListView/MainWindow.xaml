@@ -1,0 +1,44 @@
+﻿<Window x:Class="WPF_ListView.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_ListView"
+        mc:Ignorable="d"
+        Title="MainWindow" Width="800" Height="400">
+    <Window.DataContext>
+        <local:ViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Content="Add" Width="90" Command="{Binding}" CommandParameter="ButtonAdd_Click"/>
+            <Button Content="Colorize" Width="90" Command="{Binding}" CommandParameter="ButtonColorize_Click"/>
+        </StackPanel>
+
+        <ListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding View}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background" Value="{Binding BackgroundColor}"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="IP" DisplayMemberBinding="{Binding IP}" Width="90"/>
+                    <GridViewColumn Header="PING" DisplayMemberBinding="{Binding Ping}" Width="90"/>
+                    <GridViewColumn Header="Host Name" DisplayMemberBinding="{Binding DNS}" Width="90"/>
+                    <GridViewColumn Header="Mac" DisplayMemberBinding="{Binding MAC}" Width="90"/>
+                    <GridViewColumn Header="Manufacturer" DisplayMemberBinding="{Binding Manufacturer}" Width="90"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
