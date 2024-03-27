@@ -5,11 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_ListView"
         mc:Ignorable="d"
-        Title="ListView colorize" Width="800" Height="400">
-    <Window.DataContext>
-        <local:Model/>
-    </Window.DataContext>
-
+        Title="ListView colorize" Width="800" Height="400"
+        Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -17,26 +14,36 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Content="Add" Width="90" Command="{Binding}" CommandParameter="ButtonAdd_Click"/>
-            <Button Content="Colorize" Width="90" Command="{Binding}" CommandParameter="ButtonColorize_Click"/>
+            <Button Name="btnAdd" Content="Add" Width="90" Click="btnAdd_Click"/>
+            <Button Content="Colorize" Width="90" Click="Button_Click"/>
         </StackPanel>
 
-        <ListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding View}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Background" Value="{Binding BackgroundColor}"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                    <Setter Property="Margin" Value="0"/>
-                </Style>
-            </ListView.ItemContainerStyle>
+        <ListView x:Name="listView" Grid.Row="1" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler">
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!--<StackPanel/>
+                    If StackPanel was used, the memory consumed was over 2GB and dead slow.
+                    -->
+                    <VirtualizingStackPanel>
+                        <!--Memory footprint is only 200 mb-->
+                    </VirtualizingStackPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Name}" />
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="IP" DisplayMemberBinding="{Binding IP}" Width="90"/>
-                    <GridViewColumn Header="PING" DisplayMemberBinding="{Binding Ping}" Width="90"/>
-                    <GridViewColumn Header="Host Name" DisplayMemberBinding="{Binding DNS}" Width="90"/>
-                    <GridViewColumn Header="Mac" DisplayMemberBinding="{Binding MAC}" Width="90"/>
-                    <GridViewColumn Header="Manufacturer" DisplayMemberBinding="{Binding Manufacturer}" Width="90"/>
+                    <GridViewColumn Width="90" Header="A" DisplayMemberBinding="{Binding Index}"/>
+                    <GridViewColumn Width="90" Header="B/" DisplayMemberBinding="{Binding State}"/>
                 </GridView>
             </ListView.View>
         </ListView>
