@@ -42,6 +42,12 @@
                     <GridViewColumn Header="B" Width="90" DisplayMemberBinding="{Binding FieldB}" />
                 </GridView>
             </ListView.View>
+
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Copy" />
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
     </Grid>
 </Window>
