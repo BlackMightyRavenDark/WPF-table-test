@@ -3,9 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF_ListView"
         mc:Ignorable="d"
-        Title="ListView colorize" Width="800" Height="400"
+        Title="Table test: ListView" Width="800" Height="400"
         Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
@@ -14,22 +13,19 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Name="btnAdd" Content="Add" Width="90" Click="btnAdd_Click"/>
-            <Button Content="Colorize" Width="90" Click="Button_Click"/>
+            <Button Name="btnAdd" Content="Add" Width="90" Click="btnAdd_Click" />
         </StackPanel>
 
-        <ListView x:Name="listView" Grid.Row="1" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler">
-
+        <ListView x:Name="listView" Grid.Row="1">
+            <!--
+            https://stackoverflow.com/questions/296533/wpf-listview-very-slow-performance-why-elementhost-or-other-reason
+            -->
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <!--<StackPanel/>
-                    If StackPanel was used, the memory consumed was over 2GB and dead slow.
-                    -->
-                    <VirtualizingStackPanel>
-                        <!--Memory footprint is only 200 mb-->
-                    </VirtualizingStackPanel>
+                    <VirtualizingStackPanel />
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
+
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
@@ -42,8 +38,8 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="90" Header="A" DisplayMemberBinding="{Binding Index}"/>
-                    <GridViewColumn Width="90" Header="B/" DisplayMemberBinding="{Binding State}"/>
+                    <GridViewColumn Header="A" Width="90" DisplayMemberBinding="{Binding FieldA}" />
+                    <GridViewColumn Header="B" Width="90" DisplayMemberBinding="{Binding FieldB}" />
                 </GridView>
             </ListView.View>
         </ListView>
